@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/videos")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class VideoController {
 
     @Autowired
@@ -26,6 +27,11 @@ public class VideoController {
     @GetMapping("/title/{videoTitle}")
     public List findByTitle(@PathVariable String videoTitle){
         return videoRepository.findByTitle(videoTitle);
+    }
+
+    @GetMapping("/title/search")
+    public List<Video> searchVideos(@RequestParam String title) {
+        return videoRepository.findByTitleContainingIgnoreCase(title);
     }
 
     @GetMapping("/{id}")

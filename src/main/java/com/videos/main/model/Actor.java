@@ -1,5 +1,8 @@
 package com.videos.main.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -17,11 +20,17 @@ public class Actor {
 
     public Date birthDate;
 
-    @ManyToMany
+    public String nationality;
+
+    public String ethnicity;
+
+    public String height;
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "actor_video",
-        joinColumns = @JoinColumn(name = "actor_id"),
-        inverseJoinColumns = @JoinColumn(name = "video_id")
+        joinColumns = @JoinColumn(name = "video_id"),
+        inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
     private Set<Video> videos;
 
@@ -57,4 +66,27 @@ public class Actor {
         this.birthDate = birthDate;
     }
 
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public String getEthnicity() {
+        return ethnicity;
+    }
+
+    public void setEthnicity(String ethnicity) {
+        this.ethnicity = ethnicity;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
 }

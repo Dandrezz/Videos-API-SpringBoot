@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/actors")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class ActorController {
 
     @Autowired
@@ -47,7 +48,7 @@ public class ActorController {
 
     @PutMapping("/{id}")
     public Actor updateActor(@RequestBody Actor actor, @PathVariable Long id){
-        if(actor.getId() != id){
+        if(!actor.getId().equals(id)){
             throw new ActorIdMismatchException();
         }
         actorRepository.findById(id)

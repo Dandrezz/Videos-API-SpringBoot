@@ -1,6 +1,9 @@
 package com.videos.main.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -27,12 +30,8 @@ public class Video {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
 
-    @ManyToMany
-    @JoinTable(
-            name = "actor_video",
-            joinColumns = @JoinColumn(name = "actor_id"),
-            inverseJoinColumns = @JoinColumn(name = "video_id")
-    )
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Actor> actors;
 
     public Long getId() {
